@@ -75,5 +75,5 @@ class Session(db.Model):
     detail = db.Column(db.String(240))
 
     def __repr__(self):
-        return '<Session {}>'.format(self.name, self.sessionDate)
+        return '<Session {}>'.format(self.sessionDate)
 
