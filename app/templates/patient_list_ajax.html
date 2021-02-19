@@ -1,0 +1,28 @@
+
+
+<nav aria-label="...">
+        <ul class="pager">
+            <div class="row">
+                <div class="col-md-6">
+                <li class="previous{% if not prev_url %} disabled{% endif %}">
+                    <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Newer patients
+                </a>
+                </li>
+                </div>
+
+                <div class="col-md-6">
+                <li class="next{% if not next_url %} disabled{% endif %}">
+                    <a href="{{ next_url or '#' }}">
+                        Older patients <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                 </div>
+            </div>
+        </ul>
+</nav>
+
+    {% for patient in patients %}
+        {% include '_patient.html' %}
+    {% endfor %}
+

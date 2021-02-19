@@ -5,6 +5,88 @@
     {% if title %}{{ title }} - Microblog{% else %}Welcome to Microblog{% endif %}
 {% endblock %}
 
+{% block scripts %}
+
+<link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.common.min.css" rel="stylesheet" />
+<link href="http://cdn.kendostatic.com/2015.1.408/styles/kendo.default.min.css" rel="stylesheet" />
+
+
+{{super()}}
+<script type="text/javascript" src="{{ url_for('static',    filename='js/JalaliDate.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',    filename='js/kendo.web.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static',    filename='js/fa-IR.js') }}"></script>
+<link href="{{ url_for('static',    filename='css/myStyle.css') }}" rel="stylesheet" type="text/css" />
+
+<script>
+$(document).ready(function() {
+
+$(document).on("click", ".open-modal_image", function () {
+     var file = $(this).data('file');
+     $(".modal-body #modal_image").attr("src", file);
+});
+
+$(function() {
+          $('#deletePic').on('click', function(e) {
+            $.getJSON('/delete_pic?filename=' + $('.modal-body #modal_image').attr('src').replaceAll('/','%2F'),
+                function(data) {
+              //do nothing
+
+            });
+            $("#pictureModal").modal('hide');
+            $("#pictureModalDelete").modal('hide');
+            location.reload();
+            return false;
+          });
+        });
+
+$('nav a').click(function() {
+<!--  alert( "Handler for .click() called." );-->
+  window.name="";
+  $("#search").val( '') ;
+});
+console.log(window.name);
+ $("#search").val( window.name) ;
+// save value on navigation out
+  window.onbeforeunload = function() {
+  if(window.location.href.includes('_list')){
+    window.name = $("#search").val();
+    return;
+    }
+  }
+
+   if(window.location.href.endsWith('_list'))
+        if($("#search").val())
+              search($("#search").val());
+   $("#date").kendoDatePicker();
+   $(".k-datepicker").css({"background-color": "transparent", "width": "100%"});
+   $("ul#sessions").css("height", "100%");
+   $('#search').on("input", function(e) {
+      var input = $(this);
+      var val = input.val();
+      if (input.data("lastval") != val) {
+        input.data("lastval", val);
+        search(val);
+      }
+    });
+
+});
+function search(val){
+ var myUrl = "/patient";
+        if(window.location.href.includes('session'))
+            myUrl = "/session";
+         myUrl = myUrl + "_list_ajax?search=" + val;
+         $.ajax({
+            dataType : "html",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // this is the default value, so it's optional
+            url: myUrl,
+            success : function(result) {
+                $("#myDiv").html(result);
+            },
+        });
+}
+</script>
+{% endblock %}
+
 {% block navbar %}
     <nav class="navbar navbar-default">
         <div class="container">
@@ -19,7 +101,9 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('session_list') }}">Sessions </a></li>
+                     <li><a href="{{ url_for('patient_list') }}">Patients</a></li>
+                    <li><a href="{{ url_for('patient_form',id=-1) }}">Add Patient</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
@@ -34,6 +118,8 @@
     </nav>
 {% endblock %}
 
+
+
 {% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
@@ -46,6 +132,7 @@
 
         {# application content needs to be provided in the app_content block #}
         {% block app_content %}{% endblock %}
+
 
     </div>
 

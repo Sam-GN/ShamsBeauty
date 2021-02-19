@@ -5,7 +5,7 @@ from app import db
 from flask_login import UserMixin
 from time import time
 import jwt
-from app import app
+from app import app, helper
 
 
 @login.user_loader
@@ -74,6 +74,12 @@ class Session(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     detail = db.Column(db.String(240))
 
+
+    def jalali(self):
+        return helper.convertGregorianToJalali(self.sessionDate)
+
     def __repr__(self):
-        return '<Session {}>'.format(self.sessionDate)
+        date = self.jalali()
+        value = str(date.year)+'/'+str(date.month).zfill(2)+'/'+str(date.day).zfill(2)+'  '+str(self.sessionDate.hour).zfill(2)+':'+str(self.sessionDate.minute).zfill(2)
+        return value
 

@@ -15,3 +15,7 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['sam.ganji.n@gmail.com']
+    MAX_CONTENT_LENGTH = 8000 * 5000
+    UPLOAD_EXTENSIONS = ['.jpg']
+    #DOWNLOAD_PATH = os.path.join(basedir, 'uploads')
+    UPLOAD_PATH = os.path.join(basedir, 'uploads')
