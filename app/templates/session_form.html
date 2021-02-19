@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+    <h1>Session form</h1>
+    <div class="row">
+        <div class="col-md-6">
+            {{ wtf.quick_form(form) }}
+            <br>
+        </div>
+         <div class="col-md-6">
+        <form method="POST" action="" enctype="multipart/form-data">
+             {{ form2.hidden_tag() }}
+             {{form2.beforeFile.label}}
+             {{form2.beforeFile}}
+<br>
+             {% for file in filesBefore %}
+                <img class="open-modal_image" src="{{ url_for('upload', filename=file) }}" style="width: 64px;cursor: pointer;padding:1px;"
+                     data-toggle="modal" data-target="#pictureModal" data-file="{{ url_for('upload', filename=file) }}">
+             {% endfor %}
+<br>
+             <br>
+             {{form2.afterFile.label}}
+             {{form2.afterFile}}
+<br>
+             {% for file in filesAfter %}
+                <img class="open-modal_image" src="{{ url_for('upload', filename=file) }}" style="width: 64px;cursor: pointer;padding:1px;"
+                     data-toggle="modal" data-target="#pictureModal" data-file="{{ url_for('upload', filename=file) }}">
+             {% endfor %}
+<br>
+             <br>
+             {{form2.submit2}}
+            <p></p>
+    </form>
+
+        </div>
+    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="pictureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+      </div>
+      <div class="modal-body">
+         <div class="row">
+        <div class="col-md-12">
+            <img id="modal_image" style="width: 50%" class="center">
+        </div>
+
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#pictureModalDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--confimation modal-->
+<div class="modal fade" id="pictureModalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Confirm Delete</h5>
+      </div>
+      <div class="modal-body">
+         <div class="row">
+        <div class="col-md-12">
+            Are you sure?
+        </div>
+
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="deletePic" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

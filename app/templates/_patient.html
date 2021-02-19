@@ -1,0 +1,12 @@
+  <table class="table table-hover">
+        <tr>
+            <td>
+                <a href="{{ url_for('patient_form', id=patient.id) }}">
+                    {{ patient.name }}
+                </a>
+                says:
+                <br>
+                {{ patient.tel }}
+            </td>
+        </tr>
+    </table>

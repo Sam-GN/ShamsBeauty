@@ -1,0 +1,12 @@
+  <table class="table table-hover">
+        <tr>
+            <td>
+                <a href="{{ url_for('session_form', id=session.name.id ,sid=session.id) }}">
+                    {{session}}
+                </a>
+                says:
+                <br>
+                {{ session.name.name }}
+            </td>
+        </tr>
+    </table>
