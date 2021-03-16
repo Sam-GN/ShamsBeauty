@@ -2,7 +2,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}{{ title }} - Microblog{% else %}Welcome to Microblog{% endif %}
+    {% if title %}{{ title }} - Shams Beauty Clinic{% else %}Welcome to Shams Beauty Clinic{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -19,6 +19,7 @@
 <script type="text/javascript" src="{{ url_for('static',    filename='js/myJS.js') }}"></script>
 <link href="{{ url_for('static',    filename='css/paint.css') }}" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="{{ url_for('static',    filename='js/paint.js') }}"></script>
+<link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -34,7 +35,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Microblog</a>
+                <a href="{{ url_for('index') }}"><img class="logoIcon" src="{{ url_for('static',    filename='assets/favicon3.png') }}"></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
@@ -42,7 +43,6 @@
                      <li><a href="{{ url_for('patient_list') }}">Patients</a></li>
                     <li><a href="{{ url_for('patient_form',id=-1) }}">Add Patient</a></li>
                     <li><a href="{{ url_for('user') }}">Panel</a></li>
-                     <li><a href="{{ url_for('paint') }}">Paint</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}

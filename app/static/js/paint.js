@@ -208,6 +208,11 @@ var btn2 = elt('button', {style:'width:30px;height:30px;background-color:black;m
     cx.fillStyle = '#006400';
     cx.strokeStyle = '#006400';
   });
+  var btn5 = elt('button', {style:'width:30px;height:30px;background-color:#C80080;margin:2px;'});
+    btn5.addEventListener('click', function() {
+    cx.fillStyle = '#C80080';
+    cx.strokeStyle = '#C80080';
+  });
   var i = elt('i',{class:'fa'});
   btn.appendChild(i);
    var i2 = elt('i',{class:'fa'});
@@ -216,8 +221,10 @@ var btn2 = elt('button', {style:'width:30px;height:30px;background-color:black;m
    btn3.appendChild(i3);
     var i4 = elt('i',{class:'fa'});
     btn4.appendChild(i4);
+    var i5 = elt('i',{class:'fa'});
+    btn5.appendChild(i5);
 
-  return elt('span', null, btn2,btn,btn3,btn4);
+  return elt('span', null, btn2,btn,btn3,btn4,btn5);
 };
 
 
@@ -255,32 +262,32 @@ var btn2 = elt('button', {style:'width:30px;height:30px;background-color:black;m
 //};
 
 // save
-controls.save = function(cx) {
-  // MUST open in a new window because of iframe security stuff
-  var link = elt('a', {href: '/', target: '_blank'}, 'Save');
-  function update() {
-    try {
-      link.href = cx.canvas.toDataURL();
-    } catch(e) {
-      // some browsers choke on big data URLs
-
-      // also, if the server response doesn't include a header that tells the browser it
-      // can be used on other domains, the script won't be able to look at it;
-      // this is in order to prevent private information from leaking to a script;
-      // pixel data, data URL or otherwise, cannot be extracted from a "tainted canvas"
-      // and a SecurityError is thrown
-      if (e instanceof SecurityError)
-        link.href = 'javascript:alert(' +
-          JSON.stringify('Can\'t save: ' + e.toString()) + ')';
-      else
-        window.alert("Nope.");
-        throw e;
-    }
-  }
-  link.addEventListener('mouseover', update);
-  link.addEventListener('focus', update);
-  return link;
-};
+//controls.save = function(cx) {
+//  // MUST open in a new window because of iframe security stuff
+//  var link = elt('a', {href: '/', target: '_blank'}, 'Save');
+//  function update() {
+//    try {
+//      link.href = cx.canvas.toDataURL();
+//    } catch(e) {
+//      // some browsers choke on big data URLs
+//
+//      // also, if the server response doesn't include a header that tells the browser it
+//      // can be used on other domains, the script won't be able to look at it;
+//      // this is in order to prevent private information from leaking to a script;
+//      // pixel data, data URL or otherwise, cannot be extracted from a "tainted canvas"
+//      // and a SecurityError is thrown
+//      if (e instanceof SecurityError)
+//        link.href = 'javascript:alert(' +
+//          JSON.stringify('Can\'t save: ' + e.toString()) + ')';
+//      else
+//        window.alert("Nope.");
+//        throw e;
+//    }
+//  }
+//  link.addEventListener('mouseover', update);
+//  link.addEventListener('focus', update);
+//  return link;
+//};
 
 // open a file
 //controls.openFile = function(cx) {

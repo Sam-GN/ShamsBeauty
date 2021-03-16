@@ -25,7 +25,8 @@ import datetime
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    #return render_template('index.html', title='Home')
+    return getSessions('general')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -41,7 +42,8 @@ def login():
         if user.removed:
             flash('username is removed')
             return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
+        # login_user(user, remember=form.remember_me.data)
+        login_user(user)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -82,7 +84,9 @@ def reset_password_request():
                 flash('username is removed')
                 return redirect(url_for('login'))
             send_password_reset_email(user)
-        flash('Check your email for the instructions to reset your password')
+            flash('Check your email for the instructions to reset your password')
+        else:
+            flash('Wrong Email!')
         return redirect(url_for('login'))
     return render_template('reset_password_request.html',
                            title='Reset Password', form=form)
@@ -436,7 +440,8 @@ def user():
         return redirect(url_for('index'))
     users = User.query.all()
     removedUsers = User.query.filter_by(removed=True)
-    form2 = UserPanel(username=current_user.username, users=users)
+    #form2 = UserPanel(username=current_user.username, users=users)
+    form2 = UserPanel(users=users)
 
     for item in form2.users.entries:
         item.level.render_kw = {'id': 'input_' + str(item.username.data),
@@ -479,9 +484,7 @@ def remove_user():
     db.session.commit()
     return url_for('user')
 
-@app.route('/paint', methods=['GET'])
-@login_required
-def paint():
-
-    return render_template('paint.html')
-
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'assets/favicon.ico', mimetype='image/vnd.microsoft.icon')

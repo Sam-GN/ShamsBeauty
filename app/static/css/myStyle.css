@@ -14,18 +14,19 @@ ul {
 */
 }
 
-#btnPencillll{
- background-image:"{{ url_for('static',    filename='assets/pencil.png') }}"};
-   /* 16px x 16px */
-    background-color: '#4CAF50'; /* make the button transparent */
-    background-repeat: no-repeat;  /* make the background image appear only once */
-    background-position: 0px 0px;  /* equivalent to 'top left' */
-    border: none;           /* assuming we don't want any borders */
-    cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 16px;           /* make this the size of your image */
-    padding-left: 16px;     /* make text start to the right of the image */
-    vertical-align: middle; /* align the text vertically centered */
+
+.logoIcon{
+    width: 75px;
+    height: 75px;
+    margin-left: 10px;
 }
-#btnEraserllll{
- background-image:"{{ url_for('static',    filename='assets/pencil.png') }}"};
-}*/
+
+.navbar-toggle{
+margin-top:18px;
+}
+
+@media (min-width: 768px){
+.navbar-nav {
+    padding-top: 12px;
+}
+}

@@ -2,16 +2,16 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>User</h1>
+    <h1>Panel</h1>
 
     <br>
 <div class="row">
            <div class="col-md-6">
         <form method="POST" action="" >
              {{ form2.hidden_tag() }}
-             {{form2.username.label}}
-             {{form2.username}}
-<br>
+           {#  {{form2.username.label}}
+             {{form2.username}}#}
+<!--<br>-->
             {{form2.users.label}}
             <table>
              {% for subfield in form2.users %}

@@ -9,7 +9,7 @@ from app.models import User
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
+    # remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
 
@@ -102,7 +102,7 @@ class UserList(FlaskForm):
 
 
 class UserPanel(FlaskForm):
-    username = StringField('Username', render_kw={'readonly': True, 'class': 'form-control'})
+    #username = StringField('Username', render_kw={'readonly': True, 'class': 'form-control'})
     users = FieldList(FormField(UserList))
 
 
