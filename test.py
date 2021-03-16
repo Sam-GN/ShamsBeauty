@@ -1,15 +1,16 @@
 from app import app, db, jdatetime
-from app.models import User, Post, Patient, Session
+from app.models import User, Patient, Session
 
 if __name__ == '__main__':
     # u = User(username='john', email='john@example.com')
     # u = User(username='susan', email='susan@example.com')
     # db.session.add(u)
     # db.session.commit()
-    # users = User.query.all()
-    # print(users)
-    # for u in users:
-    #     print(u.id, u.username)
+     sessions = Session.query.all()
+
+
+     for u in sessions:
+         print(u.imageString)
     # u = User.query.get(1)
     # p = Post(body='my first post!', author=u)
     # db.session.add(p)
@@ -43,8 +44,8 @@ if __name__ == '__main__':
     # patients = Patient.query.all()
     # print(patients)
 
-    print(jdatetime.datetime.now())
-    session = Session.query.first()
-    print(session.time)
-    print(jdatetime.date.fromgregorian(date= session.sessionDate))
-    print(jdatetime.date.togregorian(jdatetime.datetime.now()))
+    # print(jdatetime.datetime.now())
+    # session = Session.query.first()
+    # print(session.time)
+    # print(jdatetime.date.fromgregorian(date= session.sessionDate))
+    # print(jdatetime.date.togregorian(jdatetime.datetime.now()))
