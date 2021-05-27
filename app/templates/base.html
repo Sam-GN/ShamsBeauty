@@ -2,7 +2,7 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}{{ title }} - Microblog{% else %}Welcome to Microblog{% endif %}
+    {% if title %}{{ title }} - Shams Beauty Clinic{% else %}Welcome to Shams Beauty Clinic{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -16,75 +16,13 @@
 <script type="text/javascript" src="{{ url_for('static',    filename='js/kendo.web.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static',    filename='js/fa-IR.js') }}"></script>
 <link href="{{ url_for('static',    filename='css/myStyle.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ url_for('static',    filename='js/myJS.js') }}"></script>
+<link href="{{ url_for('static',    filename='css/paint.css') }}" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ url_for('static',    filename='js/paint.js') }}"></script>
+<link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
 
-<script>
-$(document).ready(function() {
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-$(document).on("click", ".open-modal_image", function () {
-     var file = $(this).data('file');
-     $(".modal-body #modal_image").attr("src", file);
-});
-
-$(function() {
-          $('#deletePic').on('click', function(e) {
-            $.getJSON('/delete_pic?filename=' + $('.modal-body #modal_image').attr('src').replaceAll('/','%2F'),
-                function(data) {
-              //do nothing
-
-            });
-            $("#pictureModal").modal('hide');
-            $("#pictureModalDelete").modal('hide');
-            location.reload();
-            return false;
-          });
-        });
-
-$('nav a').click(function() {
-<!--  alert( "Handler for .click() called." );-->
-  window.name="";
-  $("#search").val( '') ;
-});
-console.log(window.name);
- $("#search").val( window.name) ;
-// save value on navigation out
-  window.onbeforeunload = function() {
-  if(window.location.href.includes('_list')){
-    window.name = $("#search").val();
-    return;
-    }
-  }
-
-   if(window.location.href.endsWith('_list'))
-        if($("#search").val())
-              search($("#search").val());
-   $("#date").kendoDatePicker();
-   $(".k-datepicker").css({"background-color": "transparent", "width": "100%"});
-   $("ul#sessions").css("height", "100%");
-   $('#search').on("input", function(e) {
-      var input = $(this);
-      var val = input.val();
-      if (input.data("lastval") != val) {
-        input.data("lastval", val);
-        search(val);
-      }
-    });
-
-});
-function search(val){
- var myUrl = "/patient";
-        if(window.location.href.includes('session'))
-            myUrl = "/session";
-         myUrl = myUrl + "_list_ajax?search=" + val;
-         $.ajax({
-            dataType : "html",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // this is the default value, so it's optional
-            url: myUrl,
-            success : function(result) {
-                $("#myDiv").html(result);
-            },
-        });
-}
-</script>
 {% endblock %}
 
 {% block navbar %}
@@ -97,13 +35,14 @@ function search(val){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Microblog</a>
+                <a href="{{ url_for('index') }}"><img class="logoIcon" src="{{ url_for('static',    filename='assets/favicon3.png') }}"></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('session_list') }}">Sessions </a></li>
                      <li><a href="{{ url_for('patient_list') }}">Patients</a></li>
                     <li><a href="{{ url_for('patient_form',id=-1) }}">Add Patient</a></li>
+                    <li><a href="{{ url_for('user') }}">Panel</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}

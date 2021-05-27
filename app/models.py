@@ -18,11 +18,12 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    level = db.Column(db.String(64))
     sessions = db.relationship('Session', backref='dr', lazy='dynamic')
+    removed = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return self.username
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -45,21 +46,14 @@ class User(UserMixin, db.Model):
         return User.query.get(id)
 
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)(self.username)
 
 
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True)
     tel = db.Column(db.Integer, index=True)
-    firstVisit = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    location = db.Column(db.String(64), index=True)
     referer = db.Column(db.String(64))
     sessions = db.relationship('Session', backref='name', lazy='dynamic')
 
@@ -69,14 +63,20 @@ class Patient(db.Model):
 
 class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
     sessionDate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    nextSessionDate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    detail = db.Column(db.String(240))
+    price = db.Column(db.Integer)
+    detail = db.Column(db.Text)
+    imageString = db.Column(db.Text)
 
 
     def jalali(self):
         return helper.convertGregorianToJalali(self.sessionDate)
+
+    def jalaliNext(self):
+        return helper.convertGregorianToJalali(self.nextSessionDate)
 
     def __repr__(self):
         date = self.jalali()

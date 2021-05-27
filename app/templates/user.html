@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Panel</h1>
+
+    <br>
+<div class="row">
+           <div class="col-md-6">
+        <form method="POST" action="" >
+             {{ form2.hidden_tag() }}
+           {#  {{form2.username.label}}
+             {{form2.username}}#}
+<!--<br>-->
+            {{form2.users.label}}
+            <table>
+             {% for subfield in form2.users %}
+                <tr>
+                    <td style="padding:3px">{{ subfield.username }}</td>
+                    <td style="padding:3px">{{ subfield.email }}</td>
+                    <td style="padding:3px">{{ subfield.level }}</td>
+                     <td style="padding:3px">{{ subfield.delete }}</td>
+                </tr>
+             {% endfor %}
+              </table>
+            <p></p>
+    </form>
+
+        </div>
+      </div>
+
+    <br>
+
+    <p><a href="{{ url_for('register') }}">Create new User!</a></p>
+
+<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Confirm Delete</h5>
+      </div>
+      <div class="modal-body">
+         <div class="row">
+        <div class="col-md-12">
+            Are you sure? This is irreversible!
+        </div>
+
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button id="deleteUserConfirm" type="button" class="btn btn-danger" data-dismiss="modal"
+        data-username="-1">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
