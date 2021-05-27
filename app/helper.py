@@ -5,16 +5,22 @@ from PIL import Image, ExifTags
 
 
 def convertGregorianToJalali(dateTime: datetime):
-    jalaliDate = jdatetime.date.fromgregorian(date=dateTime)
-    return jalaliDate
+    if dateTime is not None:
+        jalaliDate = jdatetime.date.fromgregorian(date=dateTime)
+        return jalaliDate
+    else:
+        return
 
 
 def covertJalaliToGeregorain(date, time):
-    splitted = date.split('/')
-    j = jdatetime.datetime(int(splitted[0]), int(splitted[1]), int(splitted[2]))
-    date = jdatetime.date.togregorian(j)
-    dbDateTime = datetime(date.year, date.month, date.day, time.hour, time.minute)
-    return dbDateTime
+    if date is not '' and time is not None:
+        splitted = date.split('/')
+        j = jdatetime.datetime(int(splitted[0]), int(splitted[1]), int(splitted[2]))
+        date = jdatetime.date.togregorian(j)
+        dbDateTime = datetime(date.year, date.month, date.day, time.hour, time.minute)
+        return dbDateTime
+    else:
+        return
 
 
 def validate_image(stream):

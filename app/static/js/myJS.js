@@ -141,6 +141,7 @@ console.log(window.name);
         if($("#search").val())
               search($("#search").val());
    $("#date").kendoDatePicker();
+   $("#nextDate").kendoDatePicker();
    $(".k-datepicker").css({"background-color": "transparent", "width": "100%"});
    $("ul#sessions").css("height", "100%");
    $("ul#users").css("height", "100%");

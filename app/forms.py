@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeField, HiddenField, \
-    FieldList, FormField, FileField, SelectField
+    FieldList, FormField, FileField, SelectField, validators
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from wtforms.fields.html5 import TimeField
 from app.models import User
@@ -74,8 +74,11 @@ class SessionsForm(FlaskForm):
     hiddenField = HiddenField()
     date = StringField('Date', validators=[
         DataRequired()])
-    time = TimeField('Time')
+    time = TimeField('Time', validators=[
+        DataRequired()])
     dr = SelectField('Dr', validators=[DataRequired()], render_kw={'class':'form-control'})
+    nextDate = StringField('Next Date')
+    nextTime = TimeField('Next Time',validators=(validators.Optional(),))
     price = StringField('Price')
     details = TextAreaField('details', validators=[
         ], render_kw={'rows': 5})

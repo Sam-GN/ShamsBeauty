@@ -65,6 +65,7 @@ class Session(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
     sessionDate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    nextSessionDate = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     price = db.Column(db.Integer)
     detail = db.Column(db.Text)
@@ -73,6 +74,9 @@ class Session(db.Model):
 
     def jalali(self):
         return helper.convertGregorianToJalali(self.sessionDate)
+
+    def jalaliNext(self):
+        return helper.convertGregorianToJalali(self.nextSessionDate)
 
     def __repr__(self):
         date = self.jalali()

@@ -211,9 +211,11 @@ def session_form(id, sid):
     else:
         session = db.session.query(Session).get(sessionID)
         form = SessionsForm(patientName=patient.name, date=session.jalali(), time=session.sessionDate
-                            , dr=session.user_id, price=session.price, details=session.detail)
+                            , dr=session.user_id,nextDate=session.jalaliNext(),nextTime=session.nextSessionDate, price=session.price, details=session.detail)
         form.date.render_kw = {'disabled': True}
         form.time.render_kw = {'disabled': True}
+        form.nextDate.render_kw = {'disabled': True}
+        form.nextTime.render_kw = {'disabled': True}
         form.price.render_kw = {'disabled': True}
         form.dr.render_kw = {'disabled': True}
         form.details.render_kw = {'readonly': True}
@@ -267,7 +269,8 @@ def session_form(id, sid):
             if isNew:
                 session = Session(patient_id=patientID, user_id=form.dr.data, price=form.price.data,
                                   detail=form.details.data,
-                                  sessionDate=helper.covertJalaliToGeregorain(form.date.data, form.time.data))
+                                  sessionDate=helper.covertJalaliToGeregorain(form.date.data, form.time.data),
+                                  nextSessionDate=helper.covertJalaliToGeregorain(form.nextDate.data, form.nextTime.data))
                 db.session.add(session)
                 db.session.flush()
                 sessionID = session.id
@@ -276,6 +279,7 @@ def session_form(id, sid):
                 return redirect(url_for('session_form', id=patientID, sid=sessionID))
             else:
                 session.sessionDate = helper.covertJalaliToGeregorain(form.date.data, form.time.data)
+                session.nextSessionDate = helper.covertJalaliToGeregorain(form.nextDate.data, form.nextTime.data)
                 session.user_id = form.dr.data
                 session.price = form.price.data
                 session.detail = form.details.data
@@ -285,6 +289,8 @@ def session_form(id, sid):
         if form.edit.data:
             form.date.render_kw = {'readonly': False}
             form.time.render_kw = {'readonly': False}
+            form.nextDate.render_kw = {'disabled': False}
+            form.nextTime.render_kw = {'disabled': False}
             form.dr.render_kw = {'disabled': False}
             form.price.render_kw = {'disabled': False}
             form.details.render_kw = {'readonly': False}
